@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "@typescript-eslint/no-var-requires": 1,
+    "no-unused-vars": 1
+  },
+  "ignorePatterns": ["types/", "node_modules/"],
+}
