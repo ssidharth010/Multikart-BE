@@ -303,7 +303,6 @@ const addAdminValidation:Schema = {
   first_name: fieldSchema["first_name"],
   last_name: fieldSchema["last_name"],
   email: fieldSchema["email"],
-  phone_number: fieldSchema["phone_number"],
 }
 
 const updateAdminValidation: Schema = {

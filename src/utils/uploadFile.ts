@@ -36,9 +36,9 @@ const upload = (fileType: Array<string>, type: string,field: {name:string,maxCou
   let result;
   switch(type) {
     case 'single':
-      console.log(field)
       result =  multerFunction.single(field[0].name);break;
     case 'array': 
+
       result = multerFunction.array(field[0].name,field[0].maxCount);break;
     case 'fields': 
       result = multerFunction.fields(field);break;

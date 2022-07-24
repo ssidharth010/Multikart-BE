@@ -526,32 +526,20 @@ export class UserRouteHandler {
 
   static addAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
-      logger.info("Incoming request to addAdmin");
-      const [err, roleId] = await asyncHandler(
-        userServices.getUserRole("Admin")
-      );
-      if (err) {
-        throw new CustomError(err);
-      }
-      const tempPassword = Math.random().toString(36).slice(-8);
+      logger.info("Incoming request to add User");
+      const tempPassword = Math.random().toString(36).slice(-8);     
       const [adminErr, adminDetails] = await asyncHandler(
         userServices.createUser({
-          role: roleId._id,
           password: tempPassword,
           ...req.body,
         })
       );
+      console.log(tempPassword);
       if (adminErr) {
         throw new CustomError(adminErr);
       }
-      const link = `${envOptions.BASE_URL}`;
-      await registerationEmail(
-        adminDetails.email,
-        link,
-        tempPassword
-      );
       return successHandler(res, {
-        message: "Admin added successfully",
+        message: "User added successfully",
         data: adminDetails,
       });
     } catch (err) {

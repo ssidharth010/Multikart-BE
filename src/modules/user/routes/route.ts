@@ -33,10 +33,10 @@ class UserRouter implements IRouter {
   getRoutes() {
     /**
      * @swagger
-     * v1/user/student/add:
+     * v1/user/admin/add:
      *   post:
      *     tags: ["User"]
-     *     description: Add student
+     *     description: Add Admin
      *     parameters:
      *       - name: Authorization
      *         description: authorization header
@@ -56,10 +56,6 @@ class UserRouter implements IRouter {
      *               type: string
      *             phone_number:
      *               type: string
-     *             studentID:
-     *               type: string
-     *             group_id:
-     *               type: string
      *
      *     responses:
      *       '200':
@@ -76,23 +72,23 @@ class UserRouter implements IRouter {
      *                 message:
      *                   type: string
      *                   description: success message.
-     *                   example: 'Student added successfully'
+     *                   example: 'Admin added successfully'
+     *
      */
 
     this.publicRouter.post(
-      "/student/add",
-      checkSchema(addStudentValidation),
-      validate(Object.keys(addStudentValidation)),
-      UserRouteHandler.addStudent
+      "/add",
+      checkSchema(addAdminValidation),
+      validate(Object.keys(addAdminValidation)),
+      UserRouteHandler.addAdmin
     );
 
-    
     /**
      * @swagger
-     * v1/user/student/list:
+     * v1/user/admin/list:
      *   get:
      *     tags: ["User"]
-     *     description: Add student
+     *     description: List all admin
      *     parameters:
      *       - name: Authorization
      *         description: authorization header
@@ -112,10 +108,6 @@ class UserRouter implements IRouter {
      *         type: string
      *       - name: sort_dir
      *         description: sort order
-     *         in: query
-     *         type: string
-     *       - name: group
-     *         description: filter by group name
      *         in: query
      *         type: string
      *       - name: name
@@ -142,33 +134,35 @@ class UserRouter implements IRouter {
      *                 message:
      *                   type: string
      *                   description: success message.
-     *                   example: 'List all student successfully'
+     *                   example: 'List all admins'
      *                 data:
      *                   type: object
-     *                   description: user details.
+     *                   description: admin details.
      *                   example: []
+     *
      */
 
     this.privateRouter.get(
-      "/student/list",
+      "/admin/list",
+      authorization(["AddAdmin"]),
       checkSchema(list),
       validate(Object.keys(list)),
-      UserRouteHandler.listStudent
+      UserRouteHandler.listAdmin
     );
 
     /**
      * @swagger
-     * v1/user/student/remove/{student_id}:
+     * v1/user/admin/remove/{admin_id}:
      *   delete:
      *     tags: ["User"]
-     *     description: Remove student
+     *     description: Remove admin
      *     parameters:
      *       - name: Authorization
      *         description: authorization header
      *         in: header
      *         type: string
-     *       - name: student_id,
-     *         description: Student id
+     *       - name: admin_id,
+     *         description: Admin Id
      *         in: params,
      *         type: string
      *
@@ -187,83 +181,31 @@ class UserRouter implements IRouter {
      *                 message:
      *                   type: string
      *                   description: success message.
-     *                   example: 'Student removed successfully'
+     *                   example: 'Admin removed successfully'
      *
      */
 
     this.privateRouter.delete(
-      "/student/remove/:student_id",
-      authorization(["RemoveStudent"]),
-      checkSchema(updateStudentValidation),
-      validate(Object.keys(updateStudentValidation)),
-      UserRouteHandler.removeStudent
+      "/admin/remove/:admin_id",
+      authorization(["RemoveAdmin"]),
+      checkSchema(updateAdminValidation),
+      validate(Object.keys(updateAdminValidation)),
+      UserRouteHandler.removeAdmin
     );
 
     /**
      * @swagger
-     * v1/user/student/update/{student_id}:
+     * v1/user/admin/update/{admin_id}:
      *   put:
      *     tags: ["User"]
-     *     description: Update student
+     *     description: Update admin
      *     parameters:
      *       - name: Authorization
      *         description: authorization header
      *         in: header
      *         type: string
-     *       - name: student_id,
-     *         description: Student id
-     *         in: params,
-     *         type: string
-     *       - name: Request
-     *         description: request body
-     *         in: body
-     *         schema:
-     *           type: object
-     *
-     *     responses:
-     *       '200':
-     *         description: Success response
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               properties:
-     *                 success:
-     *                   type: boolean
-     *                   description: Success response
-     *                   example: true
-     *                 message:
-     *                   type: string
-     *                   description: success message.
-     *                   example: 'Student updated successfully'
-     *                 data:
-     *                   type: object
-     *                   description: user details.
-     *                   example: {}
-     *
-     */
-
-    this.privateRouter.put(
-      "/student/update/:student_id",
-      authorization(["UpdateStudent"]),
-      checkSchema(updateStudentValidation),
-      validate(Object.keys(updateStudentValidation)),
-      UserRouteHandler.updateStudent
-    );
-
-    /**
-     * @swagger
-     * v1/user/student/update:
-     *   patch:
-     *     tags: ["User"]
-     *     description: Update student
-     *     parameters:
-     *       - name: Authorization
-     *         description: authorization header
-     *         in: header
-     *         type: string
-     *       - name: student_id,
-     *         description: Student id
+     *       - name: admin_id,
+     *         description: Admin Id
      *         in: params,
      *         type: string
      *       - name: Request
@@ -272,30 +214,15 @@ class UserRouter implements IRouter {
      *         schema:
      *           type: object
      *           properties:
-     *             location:
+     *             first_name:
      *               type: string
-     *             store_layout:
+     *             last_name:
      *               type: string
-     *             amount: 
-     *               type: number
-     *             services:
-     *               type: array
-     *               items:
-     *                 type: string 
-     *             equipments:
-     *               type: array
-     *               items:
-     *                 type: object
-     *                 properties:
-     *                   model:
-     *                     type: string
-     *                   price_per_cycle:
-     *                     type: number
-     *                   quantity:
-     *                     type: number
-     *                   is_purchase:
-     *                     type: boolean
-     *               
+     *             email:
+     *               type: string
+     *             phone_number:
+     *               type: string
+     *
      *     responses:
      *       '200':
      *         description: Success response
@@ -311,19 +238,16 @@ class UserRouter implements IRouter {
      *                 message:
      *                   type: string
      *                   description: success message.
-     *                   example: 'Student updated successfully'
-     *                 data:
-     *                   type: object
-     *                   description: user details.
-     *                   example: {}
+     *                   example: 'Admin updated successfully'
      *
      */
 
-    this.privateRouter.patch(
-      "/student/update",
-      checkSchema(updateSelfStudentValidation),
-      validate(Object.keys(updateSelfStudentValidation)),
-      UserRouteHandler.updateStudent
+    this.privateRouter.put(
+      "/admin/update/:admin_id",
+      authorization(["UpdateAdmin"]),
+      checkSchema(updateAdminValidation),
+      validate(Object.keys(updateAdminValidation)),
+      UserRouteHandler.updateAdmin
     );
   }
 }

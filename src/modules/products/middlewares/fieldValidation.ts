@@ -25,7 +25,7 @@ const fieldSchema: Schema = {
     isNumeric: true,
     trim: true
   },
-  image: {
+  images: {
     in: ["body"],
     exists: {
       errorMessage: "Please pass in image",
@@ -57,7 +57,7 @@ const updateProductsValidation: Schema = {
   title: fieldSchema['title'],
   description: fieldSchema['description'],
   price: fieldSchema['price'],
-  image: fieldSchema['image']
+  images: fieldSchema['images']
 };
 
 const listProductsValidation: Schema = {

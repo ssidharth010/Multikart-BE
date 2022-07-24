@@ -34,11 +34,6 @@ export class User {
             message: (props: any) => `${props.value} is not a valid email!`,
           },
         },
-        phone_number: {
-          type: String,
-          unique: true,
-          required: true,
-        },
         password: {
           type: String,
           default: null,
@@ -47,11 +42,6 @@ export class User {
               return bcrypt.hashSync(val, 10);
             }
           },
-        },
-        role: {
-          type: orm.Schema.Types.ObjectId,
-          ref: "Role",
-          required: true,
         },
         token: {
           type: String,
