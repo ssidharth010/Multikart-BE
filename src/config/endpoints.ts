@@ -2,6 +2,7 @@ import { authRouter } from "../modules/auth/routes/route";
 import { userRouter } from "../modules/user/routes/route";
 import { productsRouter} from "../modules/products/routes/route";
 import { enquiriesRouter } from "../modules/enquiries/routes/route";
+import { categoriesRouter } from "../modules/categories/routes/route";
 
 export const endpoints = [
   {
@@ -23,5 +24,10 @@ export const endpoints = [
     path: "/v1/enquiries",
     publicRoute: enquiriesRouter.publicRouter,
     privateRoute: enquiriesRouter.privateRouter
+  },
+  {
+    path: "/v1/categories",
+    publicRoute: categoriesRouter.publicRouter,
+    privateRoute: categoriesRouter.privateRouter
   }
 ];

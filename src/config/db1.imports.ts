@@ -6,6 +6,7 @@ import { Teacher } from "../modules/user/models/teacher";
 import { Group } from "../modules/user/models/group";
 import { Products} from "../modules/products/models/products";
 import { Enquiries } from "../modules/enquiries/models/enquiries";
+import { Categories } from "../modules/categories/models/categories";
 
 
 export const db1ModelImports = [
@@ -16,5 +17,6 @@ export const db1ModelImports = [
   Group,
   Teacher,
   Products,
-  Enquiries
+  Enquiries,
+  Categories
 ];

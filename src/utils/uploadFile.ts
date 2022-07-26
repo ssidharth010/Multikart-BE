@@ -4,7 +4,7 @@ import logger from "./logger";
 import { Request,Response,NextFunction } from "express";
 
 
-const upload = (fileType: Array<string>, type: string,field: {name:string,maxCount:number}[], store = "AWS") => (req:Request,res:Response,next:NextFunction) => {
+const upload = (fileType: Array<string>, type: string,field: {name:string,maxCount:number}[], store = "local") => (req:Request,res:Response,next:NextFunction) => {
   const multerFunction = multer({
     fileFilter(req, file, cb) {
       logger.debug(file);
