@@ -14,10 +14,18 @@ export class Products {
         required: true,
       },
       price: {
+        type: Number,
+        required: true,
+      },
+      category: {
         type: String,
         required: true,
       },
       images: {
+        type: Array,
+        required: true
+      },
+      details: {
         type: Array,
         required: true
       },

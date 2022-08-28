@@ -43,13 +43,31 @@ const fieldSchema: Schema = {
     },
     isAlphanumeric: true,
     isString: true,
+  }, 
+  details: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Please pass in details",
+    },
+    isString: true,
+    trim: true
+  },
+  category: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Please pass in category",
+    },
+    isString: true,
+    trim: true
   }
 };
 
 const addProductsValidation: Schema = {
   title: fieldSchema['title'],
   description: fieldSchema['description'],
-  price: fieldSchema['price']
+  price: fieldSchema['price'],
+  details: fieldSchema['details'],
+  category: fieldSchema['category']
 };
 
 const updateProductsValidation: Schema = {
@@ -57,7 +75,8 @@ const updateProductsValidation: Schema = {
   title: fieldSchema['title'],
   description: fieldSchema['description'],
   price: fieldSchema['price'],
-  images: fieldSchema['images']
+  images: fieldSchema['images'],
+  category: fieldSchema['category']
 };
 
 const listProductsValidation: Schema = {

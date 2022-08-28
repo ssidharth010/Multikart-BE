@@ -18,7 +18,7 @@ export class ProductsRouteHandler {
           statusCode: 400,
         });
       }
-      const { title, description, price } = req.body;
+      const { title, description, price, details, category } = req.body;
       const imageLocations =
         req.files && Array.isArray(req.files)
           ? req.files.map(
@@ -28,7 +28,7 @@ export class ProductsRouteHandler {
       const [err, productsResponse] = await asyncHandler(
         productsServices.createProducts(
           {
-            title, description, price,
+            title, description, price, details: JSON.parse(details), category: category,
             images: imageLocations
           }
         )
@@ -50,12 +50,21 @@ export class ProductsRouteHandler {
   static listProducts = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to listProducts");
+      const { category, maxPrice, minPrice } = req.query
+      let conditionBody:Record<string,unknown> = {}
+      if(category) {
+        conditionBody = {category:{$regex: `^${category}.*`, $options:'i'}}
+      }
+      if(maxPrice && minPrice) {
+        conditionBody = {...conditionBody, price:{$gte: Number(minPrice), $lt: Number(maxPrice)}}
+      }
       const [err, productsResponse] = await asyncHandler(
-        productsServices.getAllProducts(req.query)
+        productsServices.getAllProducts(req.query, conditionBody)
       );
       if (err) {
         throw new CustomError(err);
       }
+      
       const [{ total_count, paginated_data }] = productsResponse;
       return successHandler(
         res,

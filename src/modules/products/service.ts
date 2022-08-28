@@ -14,9 +14,12 @@ class ProductsServices implements IService {
     return this.db1Collection.instance.models.Products.create(body)
   }
 
-  async getAllProducts(query: Request['query']) {
+  async getAllProducts(query: Request['query'], condition: Record<string,unknown>) {
     const paginationAndSort = paginationAndSortAggregate(query);
     return this.db1Collection.instance.models.Products.aggregate([
+      {
+        $match: condition,
+      },
       paginationAndSort
     ]);
   }
