@@ -3,6 +3,7 @@ import { userRouter } from "../modules/user/routes/route";
 import { productsRouter} from "../modules/products/routes/route";
 import { enquiriesRouter } from "../modules/enquiries/routes/route";
 import { categoriesRouter } from "../modules/categories/routes/route";
+import { subcategoriesRouter } from "../modules/subcategories/routes/route";
 
 export const endpoints = [
   {
@@ -29,5 +30,10 @@ export const endpoints = [
     path: "/v1/categories",
     publicRoute: categoriesRouter.publicRouter,
     privateRoute: categoriesRouter.privateRouter
+  },
+  {
+    path: "/v1/subcategories",
+    publicRoute: subcategoriesRouter.publicRouter,
+    privateRoute: subcategoriesRouter.privateRouter
   }
 ];

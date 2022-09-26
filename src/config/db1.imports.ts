@@ -7,7 +7,7 @@ import { Group } from "../modules/user/models/group";
 import { Products} from "../modules/products/models/products";
 import { Enquiries } from "../modules/enquiries/models/enquiries";
 import { Categories } from "../modules/categories/models/categories";
-
+import { SubCategories } from "../modules/subcategories/models/subcategories";
 
 export const db1ModelImports = [
   User,
@@ -18,5 +18,6 @@ export const db1ModelImports = [
   Teacher,
   Products,
   Enquiries,
-  Categories
+  Categories,
+  SubCategories
 ];
