@@ -53,7 +53,7 @@ export class ProductsRouteHandler {
       const { category, maxPrice, minPrice, search } = req.query
       let conditionBody:Record<string,unknown> = {}
       if(search) {
-        conditionBody = {name:{$regex: `^${search}.*`, $options:'i'}}
+        conditionBody = {title:{$regex: `^${search}.*`, $options:'i'}}
       }
       if(category) {
         conditionBody = {category:{$regex: `^${category}.*`, $options:'i'}}
