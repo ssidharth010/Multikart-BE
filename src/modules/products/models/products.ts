@@ -21,6 +21,10 @@ export class Products {
         type: String,
         required: true,
       },
+      subcategory_id: {
+        type: String,
+        required: true,
+      },
       images: {
         type: Array,
         required: true

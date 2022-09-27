@@ -55,7 +55,15 @@ const fieldSchema: Schema = {
   category: {
     in: ["body"],
     exists: {
-      errorMessage: "Please pass in category",
+      errorMessage: "Please pass in category Id",
+    },
+    isString: true,
+    trim: true
+  },
+  subcategory_id: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Please pass in sub category ID",
     },
     isString: true,
     trim: true
@@ -67,7 +75,8 @@ const addProductsValidation: Schema = {
   description: fieldSchema['description'],
   price: fieldSchema['price'],
   details: fieldSchema['details'],
-  category: fieldSchema['category']
+  category: fieldSchema['category'],
+  subcategory_id: fieldSchema['subcategory_id']
 };
 
 const updateProductsValidation: Schema = {
@@ -76,7 +85,8 @@ const updateProductsValidation: Schema = {
   description: fieldSchema['description'],
   price: fieldSchema['price'],
   images: fieldSchema['images'],
-  category: fieldSchema['category']
+  category: fieldSchema['category'],
+  subcategory_id: fieldSchema['subcategory_id']
 };
 
 const listProductsValidation: Schema = {
