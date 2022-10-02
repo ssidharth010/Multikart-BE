@@ -67,6 +67,13 @@ const fieldSchema: Schema = {
     },
     isString: true,
     trim: true
+  }, more: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Please pass in more",
+    },
+    isString: true,
+    trim: true
   }
 };
 
@@ -76,7 +83,8 @@ const addProductsValidation: Schema = {
   price: fieldSchema['price'],
   details: fieldSchema['details'],
   category: fieldSchema['category'],
-  subcategory_id: fieldSchema['subcategory_id']
+  subcategory_id: fieldSchema['subcategory_id'],
+  more: fieldSchema['more']
 };
 
 const updateProductsValidation: Schema = {
@@ -86,7 +94,8 @@ const updateProductsValidation: Schema = {
   price: fieldSchema['price'],
   images: fieldSchema['images'],
   category: fieldSchema['category'],
-  subcategory_id: fieldSchema['subcategory_id']
+  subcategory_id: fieldSchema['subcategory_id'],
+  more: fieldSchema['more']
 };
 
 const listProductsValidation: Schema = {

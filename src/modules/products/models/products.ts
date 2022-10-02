@@ -33,6 +33,10 @@ export class Products {
         type: Array,
         required: true
       },
+      more: {
+        type: Array,
+        required: true
+      },
     });
     return instance.model<IProducts>("Products", productsSchema);
   }

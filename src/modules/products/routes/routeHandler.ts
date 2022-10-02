@@ -18,17 +18,18 @@ export class ProductsRouteHandler {
           statusCode: 400,
         });
       }
-      const { title, description, price, details, category, subcategory_id } = req.body;
+      const { title, description, price, details, category, subcategory_id, more } = req.body;
       const imageLocations =
         req.files && Array.isArray(req.files)
           ? req.files.map(
             (e) => envOptions.API_URL + "/products/" + e.filename
           )
           : [];
+            console.log(more)
       const [err, productsResponse] = await asyncHandler(
         productsServices.createProducts(
           {
-            title, description, price, details: JSON.parse(details), category, subcategory_id,
+            title, description, price, details: JSON.parse(details), category, subcategory_id, more: JSON.parse(more),
             images: imageLocations
           }
         )
