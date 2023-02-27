@@ -13,17 +13,14 @@ class UserServices implements IService {
     this.db1Collection = collection.db1Inst;
   }
 
-  async createStudent(body: Array<Record<string, unknown>>) {
+  async createCustomer(body: Array<Record<string, unknown>>) {
     const session = await this.db1Collection.instance.startSession();
     try {
       let data;
       await session.withTransaction(async () => {
-        data = await this.db1Collection.instance.models.Student.create(body, {
+        data = await this.db1Collection.instance.models.User.create(body, {
           session: session
         });
-        if(data[0].group_id) {
-          await this.db1Collection.instance.models.Quiz.updateMany({group: {$in: [data[0].group_id]}}, {$addToSet: {target: data[0]._id}}, {session:session})
-        }
       });
       session.endSession();
       return data;
@@ -39,7 +36,7 @@ class UserServices implements IService {
     }).select("_id");
   }
 
-  async getAllStudents(query: Record<string, unknown>) {
+  async getAllCustomers(query: Record<string, unknown>) {
     if (query.sort_by == "group") {
       query.sort_by = "group_id.name";
     }
@@ -55,7 +52,7 @@ class UserServices implements IService {
       userMatch = { "group_id.name": { $regex: query.group, $options: "i" } };
     }
 
-    return this.db1Collection.instance.models.Student.aggregate([
+    return this.db1Collection.instance.models.Customer.aggregate([
       {
         $lookup: {
           from: "groups",
@@ -82,70 +79,13 @@ class UserServices implements IService {
     ]);
   }
 
-  async deleteStudent(studentId: string) {
-    return this.db1Collection.instance.models.Student.findByIdAndDelete({
+  async deleteCustomer(studentId: string) {
+    return this.db1Collection.instance.models.Customer.findByIdAndDelete({
       _id: studentId,
     });
   }
 
-  async createLogo(studentId: string, logo: string | null) {
-    return this.db1Collection.instance.models.Student.findOneAndUpdate(
-      {
-        _id: studentId,
-      },
-      { logo }
-    );
-  }
-
-  async createGroup(group: string) {
-    return this.db1Collection.instance.models.Group.create({ name: group });
-  }
-
-  async getStudentsUnderGroup() {
-    return this.db1Collection.instance.models.Student.aggregate([
-      {
-        $lookup: {
-          from: "groups",
-          localField: "group_id",
-          foreignField: "_id",
-          as: "group_id",
-        }
-      },
-      {
-        $unwind: "$group_id"
-      },
-      {
-        $group: {
-          _id: {
-            group_id: "$group_id._id",
-            name: "$group_id.name"
-          },
-          students: {
-            $push: {first_name:"$first_name",last_name: "$last_name",_id:"$_id"}
-          }
-        }
-      },
-    ]);
-  }
-
-
-  async deleteGroup(id: string) {
-    const session = await this.db1Collection.instance.startSession();
-    try {
-      const result = await session.withTransaction(async () => {
-        await this.db1Collection.instance.models.Group.findByIdAndDelete(id, {session:session});
-        await this.db1Collection.instance.models.Student.updateMany({ group_id: id }, { group_id: null },{session:session});
-        await this.db1Collection.instance.models.Teacher.updateMany({}, { $pull: {group_id: id}},{session:session});
-      })
-      session.endSession();
-      return result
-    } catch (err) {
-      session.endSession();
-      throw new CustomError(err);
-    }
-  }
-
-  async updateStudent(
+  async updateCustomer(
     by: Record<string, unknown>,
     body: Record<string, unknown>
   ) {
@@ -153,14 +93,11 @@ class UserServices implements IService {
     try {
       let data;
       await session.withTransaction(async () => {
-        data = await this.db1Collection.instance.models.Student.findOneAndUpdate(
+        data = await this.db1Collection.instance.models.Customer.findOneAndUpdate(
           by,
           body,
           { new: true, session:session }
         );
-        if(body.group_id) {
-          await this.db1Collection.instance.models.Quiz.updateMany({group: {$in: [data.group_id]}}, {$addToSet: {target: data._id}}, {session:session})
-        }
       });
       session.endSession();
       return data;
@@ -170,22 +107,19 @@ class UserServices implements IService {
     }
   }
 
-  async getAllGroup() {
-    return this.db1Collection.instance.models.Group.find();
-  }
-
-  async createUser(body: Record<string, unknown>) {
-    return this.db1Collection.instance.models.User.create(body);
-  }
-
-  async createTeacher(body: Array<Record<string, unknown>>) {
+  async updateCustomerCart(
+    by: Record<string, unknown>,
+    body: Record<string, unknown>
+  ) {
     const session = await this.db1Collection.instance.startSession();
     try {
       let data;
       await session.withTransaction(async () => {
-        data = await this.db1Collection.instance.models.Teacher.create(body, {
-          session: session,
-        });
+        data = await this.db1Collection.instance.models.Customer.findOneAndUpdate(
+          by,
+          body,
+          { new: true, session:session }
+        );
       });
       session.endSession();
       return data;
@@ -195,57 +129,9 @@ class UserServices implements IService {
     }
   }
 
-  async updateTeacher(
-    by: Record<string, unknown>,
-    body: Record<string, unknown>
-  ) {
-    return this.db1Collection.instance.models.Teacher.findOneAndUpdate(
-      by,
-      body,
-      { new: true }
-    );
-  }
 
-  async getAllTeacher(query: Record<string, unknown>) {
-    if (query.sort_by == "group") {
-      query.sort_by = "group_id.name";
-    }
-    const paginationAndSort = paginationAndSortAggregate(query);
-    let userMatch = {};
-    if (query.name) {
-      userMatch = { first_name: { $regex: query.name, $options: "i" } };
-    }
-    if (query.email) {
-      userMatch = { email: { $regex: query.email, $options: "i" } };
-    }
-    if (query.group) {
-      userMatch = { "group_id.name": { $regex: query.group, $options: "i" } };
-    }
-
-    return this.db1Collection.instance.models.Teacher.aggregate([
-      {
-        $lookup: {
-          from: "groups",
-          localField: "group_id",
-          foreignField: "_id",
-          as: "group_id",
-        },
-      },
-      {
-        $match: userMatch,
-      },
-      {
-        $project: {
-          first_name: 1,
-          last_name: 1,
-          email: 1,
-          phone_number: 1,
-          group_id: 1,
-          is_active: 1,
-        },
-      },
-      paginationAndSort,
-    ]);
+  async createUser(body: Record<string, unknown>) {
+    return this.db1Collection.instance.models.User.create(body);
   }
 
   async getAllUser(query: Record<string, unknown>, role: string) {

@@ -15,8 +15,8 @@ const registerationEmail = async (to: string, link: string, pwd: string) => {
       subject: "Set password request",
       html: setPasswordContent(
         link,
-        pwd,
-        "Welcome to PBL",
+        '',
+        "Welcome",
         "We have successfully setup an account for you"
       ),
     };

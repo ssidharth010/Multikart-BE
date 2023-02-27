@@ -101,7 +101,6 @@ export const setPasswordContent = (
 	  <div style="font-family: sans-serif">
 	  <div style="font-size: 14px; color: #ffffff; line-height: 1.5; font-family: Varela Round, Trebuchet MS, Helvetica, sans-serif;">
 	  <p style="margin: 0; font-size: 14px; text-align: center;">${message}</p>
-      <p style="margin: 0; font-size: 14px; text-align: center;padding:5px;"><b>This is your temporary password: ${password}</b></p>
 	  <p style="margin: 0; font-size: 14px; text-align: center;">Please click the button below to login</p>
 	  </div>
 	  </div>
@@ -136,8 +135,6 @@ export const setPasswordContent = (
 	  <td style="padding-bottom:55px;padding-left:25px;padding-right:25px;padding-top:10px;">
 	  <div style="font-family: sans-serif">
 	  <div style="font-size: 14px; color: #7f96ef; line-height: 1.5; font-family: Varela Round, Trebuchet MS, Helvetica, sans-serif;">
-	  <p style="margin: 0; font-size: 14px; text-align: center;"><strong>Didn’t request a password setup?</strong></p>
-	  <p style="margin: 0; font-size: 14px; text-align: center;">You can safely ignore this message.</p>
 	  </div>
 	  </div>
 	  </td>

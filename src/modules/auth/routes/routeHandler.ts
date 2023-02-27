@@ -28,7 +28,6 @@ export class AuthRouteHandler {
         });
       }
       const { _id, password: userPassword } = userResponse[0];
-      console.log(userResponse[0], password, userPassword)
       if (await bcrypt.compare(password, userPassword)) {
         const token = generateToken(_id);
         const [err, updateResponse] = await asyncHandler(

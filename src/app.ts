@@ -68,48 +68,12 @@ export class Server {
 
     this.app.use(cors(corsOptions));
 
-    //serve static folders
-    this.app.use(
-      "/location/images",
-      express.static(path.join(__dirname, "../files/location"))
-    );
-
-    this.app.use(
-      "/equipment/images",
-      express.static(path.join(__dirname, "../files/equipment"))
-    );
-
-    this.app.use(
-      "/item/images",
-      express.static(path.join(__dirname, "../files/item"))
-    );
-
-    this.app.use(
-      "/news/images",
-      express.static(path.join(__dirname, "../files/news"))
-    );
-
-    this.app.use(
-      "/student/logos",
-      express.static(path.join(__dirname, "../files/logo"))
-    );
-
-    this.app.use(
-      "/population/images",
-      express.static(path.join(__dirname, "../files/population"))
-    );
-
-    this.app.use(
-      "/store/images",
-      express.static(path.join(__dirname, "../files/store"))
-    );
-
     //swagger doc setup
     const options = {
       definition: {
         openapi: "3.0.0",
         info: {
-          title: "Express API for AIS Laundry",
+          title: "Express API",
           version: "1.0.0",
         },
       },
@@ -117,11 +81,6 @@ export class Server {
       apis: [
         "./src/modules/auth/routes/route.ts",
         "./src/modules/user/routes/route.ts",
-        "./src/modules/location/routes/route.ts",
-        "./src/modules/population/routes/route.ts",
-        "./src/modules/equipment/routes/route.ts",
-        "./src/modules/quiz/routes/route.ts",
-        "./src/modules/news/routes/route.ts"
       ],
     };
 

@@ -21,6 +21,11 @@ export class User {
             return val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
           },
         },
+        cart_items: {
+          type: String,
+          required: false,
+          default: null,
+        },
         email: {
           type: String,
           unique: true,
