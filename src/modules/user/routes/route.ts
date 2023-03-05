@@ -10,7 +10,8 @@ import {
   updateAdminValidation,
   list,
   addAdminValidation,
-  updateCustomerCart
+  updateCustomerCart,
+  getCustomerCart
 } from "../middlewares/fieldValidation";
 import { upload } from "../../../utils/uploadFile";
 
@@ -32,26 +33,17 @@ class UserRouter implements IRouter {
       UserRouteHandler.addCustomer
     );
 
-    // this.privateRouter.get(
-    //   "/student/list",
-    //   authorization(["AddCustomer"]),
-    //   checkSchema(list),
-    //   validate(Object.keys(list)),
-    //   UserRouteHandler.listCustomer
-    // );
-
-    // this.privateRouter.delete(
-    //   "/student/remove/:student_id",
-    //   authorization(["RemoveCustomer"]),
-    //   checkSchema(updateCustomerValidation),
-    //   validate(Object.keys(updateCustomerValidation)),
-    //   UserRouteHandler.removeCustomer
-    // );
+    this.privateRouter.get(
+      "/customer/cart",
+      checkSchema(getCustomerCart),
+      validate(Object.keys(getCustomerCart)),
+      UserRouteHandler.getCustomerCart
+    );
 
     this.privateRouter.put(
       "/update/cart",
       checkSchema(updateCustomerCart),
-      validate(Object.keys(updateCustomerValidation)),
+      validate(Object.keys(updateCustomerCart)),
       UserRouteHandler.updateCustomerCart
     );
 
@@ -70,41 +62,6 @@ class UserRouter implements IRouter {
       validate(Object.keys(list)),
       UserRouteHandler.listAdmin
     );
-
-    /**
-     * @swagger
-     * v1/user/admin/remove/{admin_id}:
-     *   delete:
-     *     tags: ["User"]
-     *     description: Remove admin
-     *     parameters:
-     *       - name: Authorization
-     *         description: authorization header
-     *         in: header
-     *         type: string
-     *       - name: admin_id,
-     *         description: Admin Id
-     *         in: params,
-     *         type: string
-     *
-     *     responses:
-     *       '200':
-     *         description: Success response
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               properties:
-     *                 success:
-     *                   type: boolean
-     *                   description: Success response
-     *                   example: true
-     *                 message:
-     *                   type: string
-     *                   description: success message.
-     *                   example: 'Admin removed successfully'
-     *
-     */
 
     this.privateRouter.delete(
       "/admin/remove/:admin_id",

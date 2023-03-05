@@ -26,8 +26,25 @@ export class UserRouteHandler {
       if (customerErr) {
         throw new CustomError(customerErr);
       }
-      const link = `${envOptions.BASE_URL}`;
       return successHandler(res, { message: "Customer created successfully" });
+    } catch (err) {
+      return errorHandler(res, err);
+    }
+  };
+
+  static getCustomerCart = async (req: Request, res: Response): Promise<void> => {
+    try {
+      logger.info("Incoming request to listCustomer");
+      const [err, cartData] = await asyncHandler(
+        userServices.getCustomerCart({ _id: req.user._id})
+      );
+      if (err) {
+        throw new CustomError(err);
+      }
+      return successHandler(res, {
+        message: "Customer Cart fetched",
+        data: cartData,
+      });
     } catch (err) {
       return errorHandler(res, err);
     }
@@ -47,7 +64,7 @@ export class UserRouteHandler {
         res,
         {
           count: total_count[0]?.count,
-          message: "List of students",
+          message: "List of customers",
           data: paginated_data,
         },
         req.query
@@ -110,7 +127,7 @@ export class UserRouteHandler {
     try {
       logger.info("Incoming request to updateCustomerCart");
       const [err, detail] = await asyncHandler(
-        userServices.updateCustomer({ _id: req.user._id}, req.body)
+        userServices.updateCustomerCart({ _id: req.user._id}, req.body)
       );
       if (err) {
         throw new CustomError(err);

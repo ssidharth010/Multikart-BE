@@ -95,6 +95,10 @@ const addCustomerValidation: Schema = {
   password: fieldSchema["password"]
 };
 
+const getCustomerCart: Schema = {
+  cart_items: fieldSchema["cart_items"]
+}
+
 const updateCustomerValidation: Schema = {
   first_name: { optional: true, ...fieldSchema["first_name"] },
   last_name: { optional: true, ...fieldSchema["last_name"] },
@@ -149,5 +153,6 @@ export {
   updateSuperAdminValidation,
   addPermissionValidation,
   list,
+  getCustomerCart,
   updateCustomerCart
 };

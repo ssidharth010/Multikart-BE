@@ -93,7 +93,7 @@ class UserServices implements IService {
     try {
       let data;
       await session.withTransaction(async () => {
-        data = await this.db1Collection.instance.models.Customer.findOneAndUpdate(
+        data = await this.db1Collection.instance.models.User.findOneAndUpdate(
           by,
           body,
           { new: true, session:session }
@@ -107,27 +107,23 @@ class UserServices implements IService {
     }
   }
 
-  async updateCustomerCart(
-    by: Record<string, unknown>,
-    body: Record<string, unknown>
-  ) {
-    const session = await this.db1Collection.instance.startSession();
-    try {
-      let data;
-      await session.withTransaction(async () => {
-        data = await this.db1Collection.instance.models.Customer.findOneAndUpdate(
-          by,
-          body,
-          { new: true, session:session }
-        );
-      });
-      session.endSession();
-      return data;
-    } catch (err) {
-      session.endSession();
-      throw new CustomError(err);
-    }
+  async getCustomerCart(body: Record<string, unknown>) {
+    return this.db1Collection.instance.models.User.findOne(
+      body,
+      "cart_items"
+    );
   }
+
+  async updateCustomerCart(
+    where: Record<string, unknown>,
+    field: Record<string, unknown>
+  ) {
+    return this.db1Collection.instance.models.User.findOneAndUpdate(
+      where,
+      field,
+      { new: true }
+    );
+}
 
 
   async createUser(body: Record<string, unknown>) {
