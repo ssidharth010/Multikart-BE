@@ -35,8 +35,6 @@ class UserRouter implements IRouter {
 
     this.privateRouter.get(
       "/customer/cart",
-      checkSchema(getCustomerCart),
-      validate(Object.keys(getCustomerCart)),
       UserRouteHandler.getCustomerCart
     );
 
