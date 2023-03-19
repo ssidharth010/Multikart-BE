@@ -9,6 +9,7 @@ export class SubCategories {
       name: {
         type: String,
         required: true,
+        unique: true,
       },
       category_id: {
         type: String,

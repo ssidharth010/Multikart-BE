@@ -7,18 +7,18 @@ const fieldSchema: Schema = {
     isAlpha: true,
     isString: true,
     exists: {
-      errorMessage: "Please pass in name",
+      errorMessage: "Please pass first in name",
     },
     trim: true,
   },
   last_name: {
     in: ["body"],
-    isAlpha: true,
+    // isAlpha: true,
     isString: true,
     exists: {
-      errorMessage: "Please pass in name",
+      errorMessage: "Please pass in last name",
     },
-    trim: true,
+    // trim: true,
   },
   cart_items: {
     in: ["body"],
