@@ -33,6 +33,24 @@ export class EnquiriesRouteHandler {
     }
   };
 
+  static deleteEnquiry = async (req: Request, res: Response): Promise<void> => {
+    try {
+      logger.info("Incoming request to deleteEnquiry");
+      const [err, enquiriesResponse] = await asyncHandler(
+        enquiriesServices.deleteEnquiry(req.query.id)
+      );
+      if (err) {
+        throw new CustomError(err);
+      }
+      return successHandler(res, { message: "Enquiry deleted successfully", data: enquiriesResponse });
+    } catch (err) {
+      if (req.file) {
+        fs.unlinkSync(req.file.path)
+      }
+      return errorHandler(res, err);
+    }
+  };
+
   static listEnquiries = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to listEnquiries");

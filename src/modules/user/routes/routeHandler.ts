@@ -145,7 +145,7 @@ export class UserRouteHandler {
 
   static addAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
-      logger.info("Incoming request to add User");
+      logger.info("Incoming request to add Admin");
       const tempPassword = Math.random().toString(36).slice(-8);     
       const [adminErr, adminDetails] = await asyncHandler(
         userServices.createUser({
@@ -153,13 +153,12 @@ export class UserRouteHandler {
           ...req.body,
         })
       );
-      console.log(tempPassword);
       if (adminErr) {
         throw new CustomError(adminErr);
       }
       return successHandler(res, {
-        message: "User added successfully",
-        data: adminDetails,
+        message: "Admin added successfully. Save Password",
+        data: { temp_pass: tempPassword, adminDetails},
       });
     } catch (err) {
       return errorHandler(res, err);

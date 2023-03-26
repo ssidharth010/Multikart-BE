@@ -17,7 +17,7 @@ class EnquiriesServices implements IService {
     return this.db1Collection.instance.models.Enquiries.find()
   }
 
-  async deleteEnquiries(id:string) {
+  async deleteEnquiry(id: any) {
     return this.db1Collection.instance.models.Enquiries.findByIdAndDelete(id)
   }
 

@@ -27,11 +27,16 @@ class EnquiriesRouter implements IRouter {
       EnquiriesRouteHandler.addEnquiries
     );
 
-     this.publicRouter.get(
+     this.privateRouter.get(
       "/list",
       checkSchema(listEnquiriesValidation),
       validate(Object.keys(listEnquiriesValidation)),
       EnquiriesRouteHandler.listEnquiries
+    );
+
+    this.privateRouter.delete(
+      "/delete/:id",
+      EnquiriesRouteHandler.deleteEnquiry
     );
   }
 }
