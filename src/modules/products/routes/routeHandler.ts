@@ -51,17 +51,22 @@ export class ProductsRouteHandler {
   static listProducts = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to listProducts");
-      const { category, maxPrice, minPrice, search } = req.query
+      const { category, maxPrice, minPrice, search, subcategory } = req.query
       let conditionBody:Record<string,unknown> = {}
       if(search) {
         conditionBody = {title:{$regex: `^${search}.*`, $options:'i'}}
       }
       if(category) {
-        conditionBody = {category:{$regex: `^${category}.*`, $options:'i'}}
+        conditionBody = {...conditionBody, category:{$regex: `^${category}.*`, $options:'i'}}
+      }
+      if(subcategory) {
+        conditionBody = {...conditionBody, subcategory_id:{$regex: `^${subcategory}.*`, $options:'i'}}
       }
       if(maxPrice && minPrice) {
         conditionBody = {...conditionBody, price:{$gte: Number(minPrice), $lt: Number(maxPrice)}}
       }
+
+      console.log(conditionBody)
       const [err, productsResponse] = await asyncHandler(
         productsServices.getAllProducts(req.query, conditionBody)
       );

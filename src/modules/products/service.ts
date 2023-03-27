@@ -16,7 +16,6 @@ class ProductsServices implements IService {
 
   async getAllProducts(query: Request['query'], condition: Record<string,unknown>) {
     const paginationAndSort = paginationAndSortAggregate(query);
-    console.log(condition)
     return this.db1Collection.instance.models.Products.aggregate([
       {
         $match: condition,
