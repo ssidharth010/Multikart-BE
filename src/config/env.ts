@@ -11,6 +11,8 @@ export const envOptions = {
 
   //Database settings
   MONGODB_URL: process.env.MONGODB_URL as string,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL as string,
+  ADMIN_PASS: process.env.ADMIN_PASS as string,
 
   //whitelist server
   WHITELIST_SERVER: (process.env.WHITELIST_SERVER as string).split(","),

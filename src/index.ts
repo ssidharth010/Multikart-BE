@@ -11,7 +11,7 @@ class Init {
     await collection.init();
     const [adminErr, admin] = await asyncHandler(
       userServices.createUser(
-        {first_name: 'Admin', last_name: 'Admin', email: 'admin@admin.com', admin:true, password: 'admin@123',is_active: true}
+        {first_name: 'Admin', last_name: 'Admin', email: envOptions.ADMIN_EMAIL, admin:true, password: envOptions.ADMIN_PASS,is_active: true}
       )
     );
     if (admin) { 
