@@ -178,6 +178,10 @@ class UserServices implements IService {
     });
   }
 
+  async checkEmailExist(email: string) {
+    return this.db1Collection.instance.models.User.findOne({email:email})
+  }
+
   async updateRolePermissions(roleId: string, permissionId: string) {
     const permissionObjId = new mongoose.Types.ObjectId(permissionId);
 

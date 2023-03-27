@@ -57,6 +57,11 @@ export class User {
           required: true,
           default: false,
         },
+        admin: {
+          type: Boolean,
+          required: false,
+          default: false,
+        },
       },
       options
     );

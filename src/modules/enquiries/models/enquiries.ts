@@ -19,7 +19,6 @@ export class Enquiries {
       },
       email: {
         type: String,
-        unique: true,
       },
       address: {
         type: String,

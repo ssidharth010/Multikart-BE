@@ -13,7 +13,14 @@ export class UserRouteHandler {
   static addCustomer = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to addCustomer");
-      const tempPassword = Math.random().toString(36).slice(-8);
+
+      const [emailExistErr, emailExist] = await asyncHandler(
+        userServices.checkEmailExist(req.body.email)
+      );
+
+      if (emailExist) {
+        throw new CustomError({message: "Email already exist", statusCode: 400 });
+      }
       const [customerErr, customer] = await asyncHandler(
         userServices.createUser(
           {
@@ -26,7 +33,7 @@ export class UserRouteHandler {
       if (customerErr) {
         throw new CustomError(customerErr);
       }
-      return successHandler(res, { message: "Customer created successfully" });
+      return successHandler(res, { message: "Customer created successfully"});
     } catch (err) {
       return errorHandler(res, err);
     }

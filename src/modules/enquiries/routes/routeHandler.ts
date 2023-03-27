@@ -12,12 +12,6 @@ export class EnquiriesRouteHandler {
   static addEnquiries = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to addEnquiries");
-      const { first_name,
-        last_name,
-        phone,
-        email,
-        address } = req.body;
-        console.log(req.body)
       const [err, enquiriesResponse] = await asyncHandler(
         enquiriesServices.createEnquiries(req.body)
       );

@@ -2,10 +2,25 @@ import { collection } from "./config/dbCollection";
 import { Server } from "./app";
 import logger from "./utils/logger";
 import { envOptions } from "./config/env";
+import { userServices } from "./modules/user/service";
+import { asyncHandler } from "./utils/asyncHandler";
+import { CustomError } from "./utils/customError";
 
 class Init {
   static async setup() {
     await collection.init();
+    const [adminErr, admin] = await asyncHandler(
+      userServices.createUser(
+        {first_name: 'Admin', last_name: 'Admin', email: 'admin@admin.com', admin:true, password: 'admin@123',is_active: true}
+      )
+    );
+    if (admin) { 
+      logger.info(`Admin created`)
+    }
+    if (adminErr) {
+      throw new CustomError(adminErr);
+    }
+
     const server = new Server().setHeaders().setMiddlewares();
     server.app
       .listen(envOptions.PORT, () => {
