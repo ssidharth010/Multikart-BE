@@ -8,6 +8,7 @@ import { validate } from "../../../utils/validate";
 import { ProductsRouteHandler } from "./routeHandler";
 import { authorization } from "../../../utils/authorization";
 import { upload } from "../../../utils/uploadFile";
+import { authorizeAdmin } from "../../../utils/authorizeAdmin";
 
 class ProductsRouter implements IRouter {
   public publicRouter;
@@ -20,7 +21,7 @@ class ProductsRouter implements IRouter {
   }
 
   getRoutes() {
-    this.publicRouter.post(
+    this.privateRouter.post(
       "/add",
       upload(["jpg", "png", "jpeg"], "array",[{name: "image", maxCount:3}],"files/products"),
       checkSchema(addProductsValidation),
@@ -42,16 +43,16 @@ class ProductsRouter implements IRouter {
 
      this.privateRouter.put(
       "/update/:products_id",
-      authorization(['UpdateProducts']),
-      upload(["jpg", "png", "jpeg"], "single",[{name: "image_path", maxCount:1}],"files/products"),
-      checkSchema(updateProductsValidation),
-      validate(Object.keys(updateProductsValidation)),
+      authorizeAdmin(),
+      upload(["jpg", "png", "jpeg"], "array",[{name: "image", maxCount:3}],"files/products"),
+      // checkSchema(updateProductsValidation),
+      // validate(Object.keys(updateProductsValidation)),
       ProductsRouteHandler.updateProducts
     );
 
      this.privateRouter.delete(
       "/remove/:products_id",
-      authorization(['RemoveProducts']),
+      authorizeAdmin(),
       checkSchema(deleteProductsValidation),
       validate(Object.keys(deleteProductsValidation)),
       ProductsRouteHandler.removeProducts

@@ -8,6 +8,7 @@ import { validate } from "../../../utils/validate";
 import { EnquiriesRouteHandler } from "./routeHandler";
 import { authorization } from "../../../utils/authorization";
 import { upload } from "../../../utils/uploadFile";
+import { authorizeAdmin } from "../../../utils/authorizeAdmin";
 
 class EnquiriesRouter implements IRouter {
   public publicRouter;
@@ -29,13 +30,13 @@ class EnquiriesRouter implements IRouter {
 
      this.privateRouter.get(
       "/list",
-      checkSchema(listEnquiriesValidation),
-      validate(Object.keys(listEnquiriesValidation)),
+      authorizeAdmin(),
       EnquiriesRouteHandler.listEnquiries
     );
 
     this.privateRouter.delete(
       "/delete/:id",
+      authorizeAdmin(),
       EnquiriesRouteHandler.deleteEnquiry
     );
   }

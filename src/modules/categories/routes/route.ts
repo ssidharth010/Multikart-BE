@@ -8,6 +8,7 @@ import { validate } from "../../../utils/validate";
 import { CategoriesRouteHandler } from "./routeHandler";
 import { authorization } from "../../../utils/authorization";
 import { upload } from "../../../utils/uploadFile";
+import { authorizeAdmin } from "../../../utils/authorizeAdmin";
 
 class CategoriesRouter implements IRouter {
   public publicRouter;
@@ -20,7 +21,7 @@ class CategoriesRouter implements IRouter {
   }
 
   getRoutes() {
-    this.publicRouter.post(
+    this.privateRouter.post(
       "/add",
       upload(["jpg", "png", "jpeg"], "single",[{name: "image", maxCount:1}],"files/categories"),
       checkSchema(addCategoriesValidation),
@@ -42,7 +43,7 @@ class CategoriesRouter implements IRouter {
 
      this.privateRouter.put(
       "/update/:categories_id",
-      authorization(['UpdateCategories']),
+      authorizeAdmin(),
       upload(["jpg", "png", "jpeg"], "single",[{name: "image_path", maxCount:1}],"files/categories"),
       checkSchema(updateCategoriesValidation),
       validate(Object.keys(updateCategoriesValidation)),
@@ -51,9 +52,7 @@ class CategoriesRouter implements IRouter {
 
      this.privateRouter.delete(
       "/remove/:categories_id",
-      authorization(['RemoveCategories']),
-      checkSchema(deleteCategoriesValidation),
-      validate(Object.keys(deleteCategoriesValidation)),
+      authorizeAdmin(),
       CategoriesRouteHandler.removeCategories
     );
   }
