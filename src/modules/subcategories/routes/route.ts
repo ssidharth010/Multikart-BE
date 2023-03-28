@@ -53,7 +53,7 @@ class SubCategoriesRouter implements IRouter {
     );
 
      this.privateRouter.delete(
-      "/remove/:category_id",
+      "/remove/:subcategory_id",
       authorizeAdmin(),
       SubCategoriesRouteHandler.removeSubCategories
     );

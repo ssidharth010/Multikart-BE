@@ -23,6 +23,7 @@ class ProductsRouter implements IRouter {
   getRoutes() {
     this.privateRouter.post(
       "/add",
+      authorizeAdmin(),
       upload(["jpg", "png", "jpeg"], "array",[{name: "image", maxCount:3}],"files/products"),
       checkSchema(addProductsValidation),
       validate(Object.keys(addProductsValidation)),
