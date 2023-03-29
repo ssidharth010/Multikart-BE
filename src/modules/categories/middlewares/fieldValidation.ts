@@ -9,14 +9,6 @@ const fieldSchema: Schema = {
     isString: true,
     trim: true
   },
-  image: {
-    in: ["body"],
-    exists: {
-      errorMessage: "Please pass in image",
-    },
-    isString: true,
-    trim: true
-  },
   id: {
     in: ['params'],
     exists: {

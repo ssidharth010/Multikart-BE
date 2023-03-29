@@ -10,10 +10,6 @@ export class Categories {
         unique: true,
         required: true,
       },
-      image: {
-        type: String,
-        required: true
-      },
     });
     return instance.model<ICategories>("Categories", categoriesSchema);
   }

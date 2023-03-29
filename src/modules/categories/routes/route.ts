@@ -23,6 +23,7 @@ class CategoriesRouter implements IRouter {
   getRoutes() {
     this.privateRouter.post(
       "/add",
+      authorizeAdmin(),
       checkSchema(addCategoriesValidation),
       validate(Object.keys(addCategoriesValidation)),
       CategoriesRouteHandler.addCategories
