@@ -14,6 +14,7 @@ import {
   getCustomerCart
 } from "../middlewares/fieldValidation";
 import { upload } from "../../../utils/uploadFile";
+import { authorizeAdmin } from "../../../utils/authorizeAdmin";
 
 class UserRouter implements IRouter {
   public publicRouter;
@@ -46,7 +47,8 @@ class UserRouter implements IRouter {
     );
 
     this.publicRouter.post(
-      "/add",
+      "/admin/add",
+      authorizeAdmin(),
       checkSchema(addAdminValidation),
       validate(Object.keys(addAdminValidation)),
       UserRouteHandler.addAdmin
@@ -55,7 +57,7 @@ class UserRouter implements IRouter {
 
     this.privateRouter.get(
       "/admin/list",
-      authorization(["AddAdmin"]),
+      authorizeAdmin(),
       checkSchema(list),
       validate(Object.keys(list)),
       UserRouteHandler.listAdmin
@@ -63,7 +65,7 @@ class UserRouter implements IRouter {
 
     this.privateRouter.delete(
       "/admin/remove/:admin_id",
-      authorization(["RemoveAdmin"]),
+      authorizeAdmin(),
       checkSchema(updateAdminValidation),
       validate(Object.keys(updateAdminValidation)),
       UserRouteHandler.removeAdmin
@@ -71,7 +73,7 @@ class UserRouter implements IRouter {
 
     this.privateRouter.put(
       "/admin/update/:admin_id",
-      authorization(["UpdateAdmin"]),
+      authorizeAdmin(),
       checkSchema(updateAdminValidation),
       validate(Object.keys(updateAdminValidation)),
       UserRouteHandler.updateAdmin

@@ -152,21 +152,29 @@ export class UserRouteHandler {
 
   static addAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
-      logger.info("Incoming request to add Admin");
-      const tempPassword = Math.random().toString(36).slice(-8);     
-      const [adminErr, adminDetails] = await asyncHandler(
-        userServices.createUser({
-          password: tempPassword,
-          ...req.body,
-        })
+      logger.info("Incoming request to add admin");
+
+      const [emailExistErr, emailExist] = await asyncHandler(
+        userServices.checkEmailExist(req.body.email)
       );
+
+      if (emailExist) {
+        throw new CustomError({message: "Email already exist", statusCode: 400 });
+      }
+      const [adminErr, admin] = await asyncHandler(
+        userServices.createUser(
+          {
+            is_active: true,
+            admin: true,
+            ...req.body,
+          },
+        )
+      );
+      
       if (adminErr) {
         throw new CustomError(adminErr);
       }
-      return successHandler(res, {
-        message: "Admin added successfully. Save Password",
-        data: { temp_pass: tempPassword, adminDetails},
-      });
+      return successHandler(res, { message: "Admin created successfully"});
     } catch (err) {
       return errorHandler(res, err);
     }

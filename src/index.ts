@@ -9,16 +9,22 @@ import { CustomError } from "./utils/customError";
 class Init {
   static async setup() {
     await collection.init();
-    const [adminErr, admin] = await asyncHandler(
-      userServices.createUser(
-        {first_name: 'Admin', last_name: 'Admin', email: envOptions.ADMIN_EMAIL, admin:true, password: envOptions.ADMIN_PASS,is_active: true}
-      )
+    const [emailExistErr, emailExist] = await asyncHandler(
+      userServices.checkEmailExist(envOptions.ADMIN_EMAIL)
     );
-    if (admin) { 
-      logger.info(`Admin created`)
-    }
-    if (adminErr) {
-      throw new CustomError(adminErr);
+
+    if (!emailExist) {
+      const [adminErr, admin] = await asyncHandler(
+        userServices.createUser(
+          {first_name: 'Admin', last_name: 'Admin', email: envOptions.ADMIN_EMAIL, admin:true, password: envOptions.ADMIN_PASS,is_active: true}
+        )
+      );
+      if (admin) { 
+        logger.info(`Admin created`)
+      }
+      if (adminErr) {
+        throw new CustomError(adminErr);
+      }
     }
 
     const server = new Server().setHeaders().setMiddlewares();

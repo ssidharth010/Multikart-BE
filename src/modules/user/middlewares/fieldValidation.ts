@@ -114,16 +114,10 @@ const addAdminValidation:Schema = {
   first_name: fieldSchema["first_name"],
   last_name: fieldSchema["last_name"],
   email: fieldSchema["email"],
+  password: fieldSchema["password"]
 }
 
 const updateAdminValidation: Schema = {
-  first_name: { optional: true, ...fieldSchema["first_name"] },
-  last_name: { optional: true, ...fieldSchema["last_name"] },
-  email: { optional: true, ...fieldSchema["email"] },
-  phone_number: { optional: true, ...fieldSchema["phone_number"] },
-};
-
-const updateSuperAdminValidation: Schema = {
   first_name: { optional: true, ...fieldSchema["first_name"] },
   last_name: { optional: true, ...fieldSchema["last_name"] },
   email: { optional: true, ...fieldSchema["email"] },
@@ -150,7 +144,6 @@ export {
   updateCustomerValidation,
   addAdminValidation,
   updateAdminValidation,
-  updateSuperAdminValidation,
   addPermissionValidation,
   list,
   getCustomerCart,
