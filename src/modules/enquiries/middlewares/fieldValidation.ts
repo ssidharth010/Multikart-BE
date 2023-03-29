@@ -15,7 +15,7 @@ const fieldSchema: Schema = {
       errorMessage: "Please pass in last name",
     },
     isString: true,
-    trim: true
+    // trim: true
   },
   phone: {
     in: ["body"],
