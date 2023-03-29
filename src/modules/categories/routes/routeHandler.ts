@@ -12,19 +12,11 @@ export class CategoriesRouteHandler {
   static addCategories = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to addCategories");
-      if (!req.file) {
-        throw new CustomError({
-          message: "Please upload file",
-          statusCode: 400,
-        });
-      }
       const { name } = req.body;
-      const imageLocation = envOptions.API_URL + "/categories/" + req.file?.filename
       const [err, categoriesResponse] = await asyncHandler(
         categoriesServices.createCategories(
           {
-            name,
-            image: imageLocation
+            name
           }
         )
       );
@@ -33,11 +25,6 @@ export class CategoriesRouteHandler {
       }
       return successHandler(res, { message: "Categories added successfully", data: categoriesResponse });
     } catch (err) {
-      if (req.file) {
-        if (req.files && Array.isArray(req.files) && req.files.length) {
-          req.files.forEach((e) => fs.unlinkSync(e.path));
-        }
-      }
       return errorHandler(res, err);
     }
   };
@@ -84,19 +71,12 @@ export class CategoriesRouteHandler {
   static updateCategories = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to updateCategories");
-      const { title, description, image, start_date, end_date } = req.body;
-      if (!image && !req.file) {
-        throw new CustomError({
-          message: "Please upload file",
-          statusCode: 400,
-        });
-      }
+      const { title, description, start_date, end_date } = req.body;
       const { categories_id } = req.params
       const [err, categoriesResponse] = await asyncHandler(
         categoriesServices.editCategories(categories_id,
           {
-            title, description, posted_by: req.user._id, posted_date: new Date(), start_date, end_date,
-            image: req.file ? envOptions.API_URL + "/categories/images/" + req.file.filename : image
+            title, description, posted_by: req.user._id, posted_date: new Date(), start_date, end_date
           })
       );
       if (err) {
@@ -108,14 +88,8 @@ export class CategoriesRouteHandler {
           statusCode: 404,
         });
       }
-      if (req.file) {
-        fs.unlinkSync("files/categories/" + image.split('/').pop())
-      }
       return successHandler(res, { message: "Categories updated successfully", data: categoriesResponse });
     } catch (err) {
-      if (req.file) {
-        fs.unlinkSync(req.file.path)
-      }
       return errorHandler(res, err);
     }
   };
@@ -136,7 +110,6 @@ export class CategoriesRouteHandler {
           statusCode: 404,
         });
       }
-      fs.unlinkSync("files/categories/" + categoriesResponse.image.split('/').pop())
       return successHandler(res, { message: "Categories removed successfully", data: categoriesResponse });
     } catch (err) {
       return errorHandler(res, err);

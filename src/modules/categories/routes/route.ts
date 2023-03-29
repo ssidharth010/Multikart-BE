@@ -23,7 +23,6 @@ class CategoriesRouter implements IRouter {
   getRoutes() {
     this.privateRouter.post(
       "/add",
-      upload(["jpg", "png", "jpeg"], "single",[{name: "image", maxCount:1}],"files/categories"),
       checkSchema(addCategoriesValidation),
       validate(Object.keys(addCategoriesValidation)),
       CategoriesRouteHandler.addCategories
@@ -44,7 +43,6 @@ class CategoriesRouter implements IRouter {
      this.privateRouter.put(
       "/update/:categories_id",
       authorizeAdmin(),
-      upload(["jpg", "png", "jpeg"], "single",[{name: "image_path", maxCount:1}],"files/categories"),
       checkSchema(updateCategoriesValidation),
       validate(Object.keys(updateCategoriesValidation)),
       CategoriesRouteHandler.updateCategories

@@ -36,7 +36,6 @@ const addCategoriesValidation: Schema = {
 
 const updateCategoriesValidation: Schema = {
   name: fieldSchema['name'],
-  image: fieldSchema['image'],
   categories_id: fieldSchema['id']
 };
 
