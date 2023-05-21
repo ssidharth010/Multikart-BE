@@ -21,7 +21,7 @@ class EnquiriesRouter implements IRouter {
   }
 
   getRoutes() {
-    this.publicRouter.post(
+    this.privateRouter.post(
       "/add",
       checkSchema(addEnquiriesValidation),
       validate(Object.keys(addEnquiriesValidation)),
