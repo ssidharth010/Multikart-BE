@@ -1,0 +1,807 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Get it yo",
+        "description": "Get it yo Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "API for user Authentication"
+        },
+        {
+            "name": "User",
+            "description": "API for User"
+        },
+        {
+            "name": "Category",
+            "description": "API for Category"
+        },
+        {
+            "name": "Sub Category",
+            "description": "API for Sub Category"
+        },
+        {
+            "name": "Product",
+            "description": "API for Product"
+        },
+        {
+            "name": "Enquiry",
+            "description": "API for Enquiry"
+        }
+    ],
+    "paths": {
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User Login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "description": "The user's email",
+                                        "type": "string",
+                                        "example": "abcd@abcd.com"
+                                    },
+                                    "password": {
+                                        "description": " The user's password",
+                                        "type": "string",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/auth/password/forgot": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Forgot Password",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "description": "The user's email",
+                                        "type": "string",
+                                        "example": "test@admin.com"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/auth/password/change": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Change Password",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "old_password": {
+                                        "description": "The user's old password",
+                                        "type": "string",
+                                        "example": "123456781"
+                                    },
+                                    "new_password": {
+                                        "description": "The user's new password",
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "confirm_password": {
+                                        "description": "Confirm password",
+                                        "type": "string",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "required": [
+                                    "old_password",
+                                    "new_password",
+                                    "confirm_password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/user/customer/add": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User Signup",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "description": "The user's email",
+                                        "type": "string",
+                                        "example": "abcd@abcd.com"
+                                    },
+                                    "first_name": {
+                                        "description": "The user's First Name",
+                                        "type": "string",
+                                        "example": "john"
+                                    },
+                                    "last_name": {
+                                        "description": "The user's Last Name",
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "password": {
+                                        "description": " The user's password",
+                                        "type": "string",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "first_name",
+                                    "last_name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/user/customer/cart": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Read Customer's cart data",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/categories/add": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Add Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The Category Name",
+                                        "type": "string",
+                                        "example": "Category 1"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/categories/list": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Read Categories",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/categories/update/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the category",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Update Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The Category Name",
+                                        "type": "string",
+                                        "example": "test"
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/categories/remove/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the category",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete Category",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/subcategories/add": {
+            "post": {
+                "tags": [
+                    "Sub Category"
+                ],
+                "summary": "Add Sub Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The Sub Category Name",
+                                        "type": "string",
+                                        "example": "sub 1"
+                                    },
+                                    "category_id": {
+                                        "description": "The Category Id",
+                                        "type": "string",
+                                        "example": "category id"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "category_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/subcategories/list/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Category",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Sub Category"
+                ],
+                "summary": "Read Sub Categories under a Category",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/subcategories/list": {
+            "get": {
+                "tags": [
+                    "Sub Category"
+                ],
+                "summary": "Read Sub Categories",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/subcategories/update/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Sub Category",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Sub Category"
+                ],
+                "summary": "Update Sub Category",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "The Sub Category Name",
+                                        "type": "string",
+                                        "example": "Update Name"
+                                    },
+                                    "category_id": {
+                                        "description": "The Category Id",
+                                        "type": "string",
+                                        "example": "642d4514a45de7c7a64b684e"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "category_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/subcategories/remove/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Sub Category",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Sub Category"
+                ],
+                "summary": "Delete Sub Category",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/products/add": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Add Product",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "description": "The Name of the Product",
+                                        "type": "string",
+                                        "example": "Prouduct 1"
+                                    },
+                                    "description": {
+                                        "description": "Short description of the Product",
+                                        "type": "string",
+                                        "example": "This is the description of the product"
+                                    },
+                                    "price": {
+                                        "description": "The Price of the Product",
+                                        "type": "string",
+                                        "example": "100"
+                                    },
+                                    "category": {
+                                        "description": "The Category to which the Product belongs to",
+                                        "type": "string",
+                                        "example": "6422a412c58fcfb997871871"
+                                    },
+                                    "subcategory_id": {
+                                        "description": "The Sub Category to which the Product belongs to",
+                                        "type": "string",
+                                        "example": "6422af59c58fcfb9978718f5"
+                                    },
+                                    "details": {
+                                        "description": "The Details of the Product",
+                                        "type": "string",
+                                        "example": "[{\"title\": \"Question 1\", \"description\": \"This is a sentence\"}, {\"title\": \"Question 2\", \"description\": \"This is a sentence\"},{\"title\": \"Question 1\", \"description\": \"This is a sentence\"}, {\"title\": \"Question 2\", \"description\": \"This is a sentence\"}]"
+                                    },
+                                    "more": {
+                                        "description": "More Details of the product",
+                                        "type": "string",
+                                        "example": "[{ \"text\": \"Price\", \"value\": 20 },{ \"text\": \"Color\", \"value\": \"black\" } ]"
+                                    },
+                                    "image": {
+                                        "description": "The image file of the Product",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "price",
+                                    "category",
+                                    "subcategory_id",
+                                    "details",
+                                    "more",
+                                    "image"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/products/list": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Read Products",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/products/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the product",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Read Single Product",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/products/update/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the product",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Uodate Product",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "description": "The Name of the Product",
+                                        "type": "string",
+                                        "example": "Prouduct 1"
+                                    },
+                                    "description": {
+                                        "description": "Short description of the Product",
+                                        "type": "string",
+                                        "example": "This is the description of the product"
+                                    },
+                                    "price": {
+                                        "description": "The Price of the Product",
+                                        "type": "string",
+                                        "example": "100"
+                                    },
+                                    "category": {
+                                        "description": "The Category to which the Product belongs to",
+                                        "type": "string",
+                                        "example": "6422a412c58fcfb997871871"
+                                    },
+                                    "subcategory_id": {
+                                        "description": "The Sub Category to which the Product belongs to",
+                                        "type": "string",
+                                        "example": "6422af59c58fcfb9978718f5"
+                                    },
+                                    "details": {
+                                        "description": "The Details of the Product",
+                                        "type": "string",
+                                        "example": "[{\"title\": \"Question 1\", \"description\": \"This is a sentence\"}, {\"title\": \"Question 2\", \"description\": \"This is a sentence\"},{\"title\": \"Question 1\", \"description\": \"This is a sentence\"}, {\"title\": \"Question 2\", \"description\": \"This is a sentence\"}]"
+                                    },
+                                    "more": {
+                                        "description": "More Details of the product",
+                                        "type": "string",
+                                        "example": "[{ \"text\": \"Price\", \"value\": 20 },{ \"text\": \"Color\", \"value\": \"black\" } ]"
+                                    },
+                                    "image": {
+                                        "description": "The image file of the Product",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/products/remove/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Product",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete Product",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/enquiries/add": {
+            "post": {
+                "tags": [
+                    "Enquiry"
+                ],
+                "summary": "Add Enquiry",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "first_name": {
+                                        "description": "The user's First Name",
+                                        "type": "string",
+                                        "example": "john"
+                                    },
+                                    "last_name": {
+                                        "description": "The user's Last Name",
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "phone": {
+                                        "description": " The user's Phone Number",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "email": {
+                                        "description": "The user's email",
+                                        "type": "string",
+                                        "example": "abcd@abcd.com"
+                                    },
+                                    "address": {
+                                        "description": "The user's address",
+                                        "type": "string",
+                                        "example": "abcd@abcd.com"
+                                    },
+                                    "product_ids": {
+                                        "description": "The Id's of the product",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "1",
+                                            "2",
+                                            "3"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "phone",
+                                    "email",
+                                    "address",
+                                    "product_ids"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/enquiries/list": {
+            "get": {
+                "tags": [
+                    "Enquiry"
+                ],
+                "summary": "Read Enquiry",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/enquiries/delete/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the Enquiry",
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Enquiry"
+                ],
+                "summary": "Delete Enquiry",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Authorization": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        }
+    },
+    "security": [
+        {
+            "Authorization": []
+        }
+    ]
+}

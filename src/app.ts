@@ -1,4 +1,4 @@
-import express, { NextFunction,Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { envOptions } from "./config/env";
 import helmet from "helmet";
 import cors from "cors";
@@ -6,7 +6,8 @@ import { endpoints } from "./config/endpoints";
 import { errorHandler } from "./utils/responseHandler";
 import { authentication } from "./utils/authentication";
 import * as swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from "swagger-jsdoc";
+// import swaggerJSDoc from "swagger-jsdoc";
+const swaggerDocument = require('../swagger.json');
 import { CustomError } from "./utils/customError";
 import compression from "compression";
 import path from "path";
@@ -66,33 +67,37 @@ export class Server {
       },
     };
 
-    this.app.use(cors(corsOptions));
+    // this.app.use(cors(corsOptions));
 
     //swagger doc setup
-    const options = {
-      definition: {
-        openapi: "3.0.0",
-        info: {
-          title: "Express API",
-          version: "1.0.0",
-        },
-      },
-      // Paths to files containing OpenAPI definitions
-      apis: [
-        "./src/modules/auth/routes/route.ts",
-        "./src/modules/user/routes/route.ts",
-      ],
-    };
+    // const options = {
+    //   definition: {
+    //     openapi: "3.0.0",
+    //     info: {
+    //       title: "Express API",
+    //       version: "1.0.0",
+    //     },
+    //   },
+    //   // Paths to files containing OpenAPI definitions
+    //   apis: [
+    //     "./src/modules/auth/routes/route.ts",
+    //     "./src/modules/user/routes/route.ts",
+    //   ],
+    // };
 
-    const swaggerSpec = swaggerJSDoc(options);
-    if (envOptions.ENV == "dev") {
-      this.app.use(
-        "/technaunce/api-docs",
-        swaggerUi.serve,
-        swaggerUi.setup(swaggerSpec)
-      );
-    }
-
+    // const swaggerSpec = swaggerJSDoc(options);
+    // if (envOptions.ENV == "dev") {
+    //   this.app.use(
+    //     "/technaunce/api-docs",
+    //     swaggerUi.serve,
+    //     swaggerUi.setup(swaggerSpec)
+    //   );
+    // }
+    this.app.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerDocument)
+    );
     // endpoints and middlewares
     endpoints.forEach((endpoint) => {
       this.app.use(endpoint.path, endpoint.publicRoute);
