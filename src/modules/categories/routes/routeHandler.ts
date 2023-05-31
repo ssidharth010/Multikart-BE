@@ -6,6 +6,7 @@ import logger from "../../../utils/logger";
 import { CustomError } from "../../../utils/customError";
 import fs from "fs"
 import { envOptions } from "../../../config/env";
+import { subcategoriesServices } from "../../subcategories/service";
 
 export class CategoriesRouteHandler {
 
@@ -71,12 +72,12 @@ export class CategoriesRouteHandler {
   static updateCategories = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to updateCategories");
-      const { title, description, start_date, end_date } = req.body;
+      const { name } = req.body;
       const { categories_id } = req.params
       const [err, categoriesResponse] = await asyncHandler(
         categoriesServices.editCategories(categories_id,
           {
-            title, description, posted_by: req.user._id, posted_date: new Date(), start_date, end_date
+            name
           })
       );
       if (err) {
@@ -98,11 +99,21 @@ export class CategoriesRouteHandler {
     try {
       logger.info("Incoming request to removeCategories");
       const { categories_id } = req.params;
+      const [subCategerr, subCategResponse] = await asyncHandler(
+        subcategoriesServices.deleteSubCategByCateg(categories_id)
+      );
       const [err, categoriesResponse] = await asyncHandler(
         categoriesServices.deleteCategories(categories_id)
       );
       if (err) {
         throw new CustomError(err);
+      }
+      
+      if (!subCategResponse) {
+        throw new CustomError({
+          message: "Sub Categories doesnt exist",
+          statusCode: 404,
+        });
       }
       if (!categoriesResponse) {
         throw new CustomError({

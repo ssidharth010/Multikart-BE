@@ -105,29 +105,14 @@ export class ProductsRouteHandler {
   static updateProducts = async (req: Request, res: Response): Promise<void> => {
     try {
       logger.info("Incoming request to updateProducts");
-      const { title, description, image, start_date, end_date } = req.body;
+      const { title, description, price, details, category, subcategory_id, more } = req.body;
       if (!req.files) {
         throw new CustomError({
           message: "Please upload file",
           statusCode: 400,
         });
       }
-      
-    // const { title, description, price, details, category, subcategory_id, more } = req.body;
-    // const imageLocations =
-    //   req.files && Array.isArray(req.files)
-    //     ? req.files.map(
-    //       (e) => envOptions.API_URL + "/products/" + e.filename
-    //     )
-    //     : [];
-    // const [err, productsResponse] = await asyncHandler(
-    //   productsServices.createProducts(
-    //     {
-    //       title, description, price, details: JSON.parse(details), category, subcategory_id, more: JSON.parse(more),
-    //       images: imageLocations
-    //     }
-    //   )
-    // );
+
     const imageLocations =
       req.files && Array.isArray(req.files)
         ? req.files.map(
@@ -135,13 +120,20 @@ export class ProductsRouteHandler {
         )
         : [];
 
-      const { products_id } = req.params
+      const { products_id } = req.params;
+      const updatedData: any = {};
+      if(title){updatedData.title = title}
+      if(description){updatedData.description = description}
+      if(price){updatedData.price = price}
+      if(details){updatedData.details = details}
+      if(category){updatedData.category = category}
+      if(subcategory_id){updatedData.subcategory_id = subcategory_id}
+      if(more){updatedData.more = more}
+      if(imageLocations.length){ updatedData.images = imageLocations}
+
       const [err, productsResponse] = await asyncHandler(
         productsServices.editProducts(products_id,
-          {
-            title, description, posted_by: req.user._id, posted_date: new Date(), start_date, end_date,
-            images: imageLocations
-          })
+          updatedData)
       );
       if (err) {
         throw new CustomError(err);

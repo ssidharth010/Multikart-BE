@@ -37,7 +37,10 @@ class SubCategoriesServices implements IService {
     return this.db1Collection.instance.models.SubCategories.findByIdAndDelete(id)
   }
 
-
+  async deleteSubCategByCateg(id:string) {
+    return this.db1Collection.instance.models.SubCategories.deleteMany({ category_id: id })
+  }
+  
 }
 
 export const subcategoriesServices = new SubCategoriesServices(collection);
