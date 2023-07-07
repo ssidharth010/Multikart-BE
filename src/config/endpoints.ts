@@ -7,32 +7,32 @@ import { subcategoriesRouter } from "../modules/subcategories/routes/route";
 
 export const endpoints = [
   {
-    path: "/v1/auth",
+    path: "/api/auth",
     publicRoute: authRouter.publicRouter,
     privateRoute: authRouter.privateRouter,
   },
   {
-    path: "/v1/user",
+    path: "/api/user",
     publicRoute: userRouter.publicRouter,
     privateRoute: userRouter.privateRouter,
   },
   {
-    path: "/v1/products",
+    path: "/api/products",
     publicRoute: productsRouter.publicRouter,
     privateRoute: productsRouter.privateRouter
   },
   {
-    path: "/v1/enquiries",
+    path: "/api/enquiries",
     publicRoute: enquiriesRouter.publicRouter,
     privateRoute: enquiriesRouter.privateRouter
   },
   {
-    path: "/v1/categories",
+    path: "/api/categories",
     publicRoute: categoriesRouter.publicRouter,
     privateRoute: categoriesRouter.privateRouter
   },
   {
-    path: "/v1/subcategories",
+    path: "/api/subcategories",
     publicRoute: subcategoriesRouter.publicRouter,
     privateRoute: subcategoriesRouter.privateRouter
   }

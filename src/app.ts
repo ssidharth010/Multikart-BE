@@ -16,9 +16,11 @@ export class Server {
 
   constructor() {
     this.app = express();
+    this.app.use(express.static('static'));
     this.app.use(express.static('files'));
-    // Add a catch-all route
-    this.app.get('*', (req, res) => {
+
+    // Serve the main HTML file for non-API routes
+    this.app.get(/^\/(?!api).*/, (req, res) => {
       res.sendFile(path.resolve('static/index.html'));
     });
   }

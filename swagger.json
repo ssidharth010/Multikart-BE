@@ -36,7 +36,7 @@
         }
     ],
     "paths": {
-        "/v1/auth/login": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
@@ -74,7 +74,7 @@
                 }
             }
         },
-        "/v1/auth/password/forgot": {
+        "/api/auth/password/forgot": {
             "post": {
                 "tags": [
                     "Auth"
@@ -106,7 +106,7 @@
                 }
             }
         },
-        "/v1/auth/password/change": {
+        "/api/auth/password/change": {
             "post": {
                 "tags": [
                     "Auth"
@@ -150,7 +150,7 @@
                 }
             }
         },
-        "/v1/user/customer/add": {
+        "/api/user/customer/add": {
             "post": {
                 "tags": [
                     "User"
@@ -200,7 +200,7 @@
                 }
             }
         },
-        "/v1/user/customer/cart": {
+        "/api/user/customer/cart": {
             "get": {
                 "tags": [
                     "User"
@@ -213,7 +213,7 @@
                 }
             }
         },
-        "/v1/categories/add": {
+        "/api/categories/add": {
             "post": {
                 "tags": [
                     "Category"
@@ -245,7 +245,7 @@
                 }
             }
         },
-        "/v1/categories/list": {
+        "/api/categories/list": {
             "get": {
                 "tags": [
                     "Category"
@@ -258,7 +258,7 @@
                 }
             }
         },
-        "/v1/categories/update/{id}": {
+        "/api/categories/update/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -301,7 +301,7 @@
                 }
             }
         },
-        "/v1/categories/remove/{id}": {
+        "/api/categories/remove/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -325,7 +325,7 @@
                 }
             }
         },
-        "/v1/subcategories/add": {
+        "/api/subcategories/add": {
             "post": {
                 "tags": [
                     "Sub Category"
@@ -363,7 +363,7 @@
                 }
             }
         },
-        "/v1/subcategories/list/{id}": {
+        "/api/subcategories/list/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -387,7 +387,7 @@
                 }
             }
         },
-        "/v1/subcategories/list": {
+        "/api/subcategories/list": {
             "get": {
                 "tags": [
                     "Sub Category"
@@ -400,7 +400,7 @@
                 }
             }
         },
-        "/v1/subcategories/update/{id}": {
+        "/api/subcategories/update/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -449,7 +449,7 @@
                 }
             }
         },
-        "/v1/subcategories/remove/{id}": {
+        "/api/subcategories/remove/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -473,7 +473,7 @@
                 }
             }
         },
-        "/v1/products/add": {
+        "/api/products/add": {
             "post": {
                 "tags": [
                     "Product"
@@ -547,7 +547,7 @@
                 }
             }
         },
-        "/v1/products/list": {
+        "/api/products/list": {
             "get": {
                 "tags": [
                     "Product"
@@ -560,7 +560,7 @@
                 }
             }
         },
-        "/v1/products/{id}": {
+        "/api/products/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -584,7 +584,7 @@
                 }
             }
         },
-        "/v1/products/update/{id}": {
+        "/api/products/update/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -659,7 +659,7 @@
                 }
             }
         },
-        "/v1/products/remove/{id}": {
+        "/api/products/remove/{id}": {
             "parameters": [
                 {
                     "name": "id",
@@ -683,7 +683,7 @@
                 }
             }
         },
-        "/v1/enquiries/add": {
+        "/api/enquiries/add": {
             "post": {
                 "tags": [
                     "Enquiry"
@@ -752,7 +752,7 @@
                 }
             }
         },
-        "/v1/enquiries/list": {
+        "/api/enquiries/list": {
             "get": {
                 "tags": [
                     "Enquiry"
@@ -765,7 +765,7 @@
                 }
             }
         },
-        "/v1/enquiries/delete/{id}": {
+        "/api/enquiries/delete/{id}": {
             "parameters": [
                 {
                     "name": "id",

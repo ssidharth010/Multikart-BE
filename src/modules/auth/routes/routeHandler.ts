@@ -132,7 +132,7 @@ export class AuthRouteHandler {
       if (err) {
         throw new CustomError(err);
       }
-      return res.redirect(307, `${envOptions.API_URL}/v1/auth/logout`);
+      return res.redirect(307, `${envOptions.API_URL}/api/auth/logout`);
     } catch (err) {
       return errorHandler(res, err);
     }
