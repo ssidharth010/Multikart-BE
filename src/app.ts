@@ -17,6 +17,10 @@ export class Server {
   constructor() {
     this.app = express();
     this.app.use(express.static('files'));
+    // Add a catch-all route
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.resolve('static/index.html'));
+    });
   }
 
   setHeaders() {
